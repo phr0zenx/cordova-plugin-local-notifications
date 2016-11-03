@@ -118,8 +118,10 @@ public class Builder {
     public Notification build() {
         Uri sound     = options.getSoundUri();
         int smallIcon = options.getSmallIcon();
+        Uri banner    = options.getBannerUri();
         int ledColor  = options.getLedColor();
         NotificationCompat.Builder builder;
+        NotificationCompat.BigTextStyle style;
 
         builder = new NotificationCompat.Builder(context)
                 .setDefaults(0)
@@ -139,7 +141,12 @@ public class Builder {
         if (sound != null) {
             builder.setSound(sound);
         }
-
+        if(banner != null) {
+            builder.setStyle(new NotificationCompat.BigPictureStyle().bigPicture(options.getBannerBitmap()));
+        } else {
+            style = new NotificationCompat.BigTextStyle().bigText(options.getText());
+            builder.setStyle(style);    
+        }
         if (smallIcon == 0) {
             builder.setSmallIcon(options.getIcon());
         } else {
