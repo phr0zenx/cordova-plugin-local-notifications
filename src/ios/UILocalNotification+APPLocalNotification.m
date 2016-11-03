@@ -52,7 +52,6 @@ NSInteger const APPLocalNotificationTypeTriggered = 2;
 /**
  * Applies the given options when calling on JS side:
  * notification.local.add(options)
-
  */
 - (void) __init
 {
@@ -61,7 +60,9 @@ NSInteger const APPLocalNotificationTypeTriggered = 2;
     self.fireDate = options.fireDate;
     self.timeZone = [NSTimeZone defaultTimeZone];
     self.applicationIconBadgeNumber = options.badgeNumber;
-    self.repeatInterval = options.repeatInterval;
+    if (NSCalendarUnitEra != options.repeatInterval) {
+        self.repeatInterval = options.repeatInterval;
+    }
     self.alertBody = options.alertBody;
     self.soundName = options.soundName;
 
