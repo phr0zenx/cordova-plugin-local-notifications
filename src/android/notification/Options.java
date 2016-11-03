@@ -134,10 +134,11 @@ public class Options {
 
         Uri iconUri  = assets.parse(options.optString("icon", "res://icon"));
         Uri soundUri = assets.parseSound(options.optString("sound", null));
-
+        Uri bannerUri = assets.parse(options.optString("banner", null));
         try {
             options.put("iconUri", iconUri.toString());
             options.put("soundUri", soundUri.toString());
+            options.put("bannerUri", bannerUri.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -321,6 +322,35 @@ public class Options {
     /**
      * Icon bitmap for the local notification.
      */
+    public Uri getBannerUri() {
+        Uri uri = null;
+
+        try {
+            uri = Uri.parse(options.optString("bannerUri"));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return uri;
+    }
+
+    /**
+     * Banner bitmap for the local notification.
+     */
+    public Bitmap getBannerBitmap() {
+        String banner = options.optString("banner", null);
+        Bitmap bmp;
+
+        try {
+            Uri uri = Uri.parse(options.optString("bannerUri"));
+            bmp = assets.getIconFromUri(uri);
+        } catch (Exception e){
+            bmp = assets.getIconFromDrawable(banner);
+        }
+
+        return bmp;
+    }
+    
     public Bitmap getIconBitmap() {
         Bitmap bmp;
 
@@ -334,7 +364,10 @@ public class Options {
 
         return bmp;
     }
-
+    /**
+    * Banner file path for the local notification.
+    */
+    
     /**
      * Icon resource ID for the local notification.
      */
